@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane fx:controller="com.scissor.hand.PlayFourController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="804.0" prefWidth="1284.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane fx:id="oneBorderPane" layoutX="1.0" layoutY="1.0" prefHeight="400.0" prefWidth="640.0" style="-fx-border-color: red;" />
+      <BorderPane fx:id="twoBorderPane" layoutX="1.0" layoutY="403.0" prefHeight="400.0" prefWidth="640.0" style="-fx-border-color: red;" />
+      <BorderPane fx:id="threeBorderPane" layoutX="642.0" layoutY="1.0" prefHeight="400.0" prefWidth="640.0" style="-fx-border-color: red;" />
+      <BorderPane fx:id="fourBorderPane" layoutX="642.0" layoutY="403.0" prefHeight="400.0" prefWidth="640.0" style="-fx-border-color: red;" />
+   </children>
+</Pane>
