@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSON;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -25,11 +27,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static uk.co.caprica.vlcj.javafx.videosurface.ImageViewVideoSurfaceFactory.videoSurfaceForImageView;
 
 public class SecondaryController
 {
+    public static final String[] OPTIONS = {
+            "--quiet",
+            "--quiet-synchro",
+            "--intf",
+            "dummy"
+    };
+
+    private static final String MRL = "screen://";
+    private static final String SOUT = ":sout=#transcode{vcodec=FLV1,vb=%d,scale=%f}:duplicate{dst=file{dst=%s}}";
+    private static final String FPS = ":screen-fps=%d";
+    private static final String CACHING = ":screen-caching=%d";
+
+    private static final int fps = 20;
+    private static final int caching = 500;
+    private static final int bits = 4096;
+    private static final float scale = 0.5f;
+
 
     @FXML
     private Button confirm;
@@ -40,7 +60,7 @@ public class SecondaryController
     @FXML
     private TextField name;
 
-    private final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
+    private final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(OPTIONS);
 
     public static final Map<String, VideoData> VIDEOS = new HashMap<>(20);
     public static final Map<String, Video> RESOURCE = new HashMap<>(20);
@@ -65,13 +85,72 @@ public class SecondaryController
         PrimaryController.stage = null;
     }
 
+    private static String[] getMediaOptions(String destination)
+    {
+        return new String[]{
+                String.format(SOUT, bits, scale, destination),
+                String.format(FPS, fps),
+                String.format(CACHING, caching)
+        };
+    }
+
     public static void updateData(String nameText)
     {
         //更新主线程数据
         Label label = new Label(nameText);
+        ContextMenu contextMenu = new ContextMenu();
+        // 菜单项
+//        MenuItem capture = new MenuItem("捕获");
+//        capture.setOnAction(actionEvent -> {
+//            VideoData videoData = VIDEOS.get(nameText);
+//            if (videoData.getEmbeddedMediaPlayer().status().isPlaying())
+//            {
+//                videoData.getEmbeddedMediaPlayer().controls().stop();
+//                String[] options = {":sout=#transcode{vcodec=mp4v,vb=4096,scale=1,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=file{dst=" + UUID.randomUUID().toString() + ".mp4" + "},dst=display}", ":input-slave=alsa://hw:0,0"};
+//                videoData.getEmbeddedMediaPlayer().media().play(SecondaryController.RESOURCE.get(nameText).getResource(), options);
+//            }
+//        });
+        // 菜单项
+        MenuItem screenshot = new MenuItem("截图");
+        screenshot.setOnAction(actionEvent -> {
+            VideoData videoData = VIDEOS.get(nameText);
+            if (videoData.getEmbeddedMediaPlayer().status().isPlaying())
+            {
+                videoData.getEmbeddedMediaPlayer().snapshots().save(new File(UUID.randomUUID().toString() + "-" + DateUtils.formatNow(DateUtils.TIME_FORMAT_2) + ".png"));
+            }
+        });
+        MenuItem play = new MenuItem("播放");
+        play.setOnAction(actionEvent -> {
+            VideoData videoData = VIDEOS.get(nameText);
+            if (!videoData.getEmbeddedMediaPlayer().status().isPlaying())
+            {
+                videoData.getEmbeddedMediaPlayer().controls().play();
+            }
+        });
+        MenuItem stop = new MenuItem("停止");
+        stop.setOnAction(actionEvent -> {
+            VideoData videoData = VIDEOS.get(nameText);
+            if (videoData.getEmbeddedMediaPlayer().status().isPlaying())
+            {
+                videoData.getEmbeddedMediaPlayer().controls().stop();
+            }
+        });
+        MenuItem pause = new MenuItem("暂停");
+        pause.setOnAction(actionEvent -> {
+            VideoData videoData = VIDEOS.get(nameText);
+            if (videoData.getEmbeddedMediaPlayer().status().isPlaying())
+            {
+                videoData.getEmbeddedMediaPlayer().controls().pause();
+            }
+        });
+        // 右键菜单===================================================================
+        // 添加右键菜单到label
+        contextMenu.getItems().addAll(screenshot, play, stop, pause);
+        label.setContextMenu(contextMenu);
+
         label.setOnMouseClicked(mouseEvent -> {
             //单击
-            if (mouseEvent.getClickCount() == 1)
+            if (mouseEvent.getClickCount() == 1 && mouseEvent.getButton() == MouseButton.PRIMARY)
             {
                 //购物车是否存在
                 if (!SHOPPING_CART.containsKey(nameText))

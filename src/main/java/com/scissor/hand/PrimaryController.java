@@ -23,9 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import static com.scissor.hand.SecondaryController.SHOPPING_CART;
-import static com.scissor.hand.SecondaryController.VIDEOS_LIST;
-import static com.scissor.hand.SecondaryController.updateData;
+import static com.scissor.hand.SecondaryController.*;
 import static uk.co.caprica.vlcj.javafx.videosurface.ImageViewVideoSurfaceFactory.videoSurfaceForImageView;
 
 
@@ -55,7 +53,7 @@ public class PrimaryController
      */
     public static Stage stage = null;
 
-    private final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
+    private final MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory(OPTIONS);
 
     public PrimaryController()
     {
