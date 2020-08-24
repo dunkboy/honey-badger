@@ -6,12 +6,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane fx:controller="com.scissor.hand.PlayFourController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="804.0" prefWidth="1284.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1054.0" prefWidth="1684.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.scissor.hand.PlayFourController">
    <children>
-      <BorderPane fx:id="oneBorderPane" layoutX="1.0" layoutY="1.0" prefHeight="400.0" prefWidth="640.0" style="-fx-border-color: red;" />
-      <BorderPane fx:id="twoBorderPane" layoutX="1.0" layoutY="403.0" prefHeight="400.0" prefWidth="640.0" style="-fx-border-color: red;" />
-      <BorderPane fx:id="threeBorderPane" layoutX="642.0" layoutY="1.0" prefHeight="400.0" prefWidth="640.0" style="-fx-border-color: red;" />
-      <BorderPane fx:id="fourBorderPane" layoutX="642.0" layoutY="403.0" prefHeight="400.0" prefWidth="640.0" style="-fx-border-color: red;" />
+      <BorderPane fx:id="oneBorderPane" layoutX="1.0" layoutY="1.0" prefHeight="525.0" prefWidth="840.0" style="-fx-border-color: red;" />
+      <BorderPane fx:id="twoBorderPane" layoutX="1.0" layoutY="527.0" prefHeight="525.0" prefWidth="840.0" style="-fx-border-color: red;" />
+      <BorderPane fx:id="threeBorderPane" layoutX="842.0" layoutY="1.0" prefHeight="525.0" prefWidth="840.0" style="-fx-border-color: red;" />
+      <BorderPane fx:id="fourBorderPane" layoutX="842.0" layoutY="527.0" prefHeight="525.0" prefWidth="840.0" style="-fx-border-color: red;" />
    </children>
 </Pane>

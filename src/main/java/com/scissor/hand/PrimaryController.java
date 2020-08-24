@@ -210,17 +210,113 @@ public class PrimaryController
                 i++;
             }
         }
-//        //九宫格
-//        if (SecondaryController.SHOPPING_CART.size() > 4 && tabPane.getSelectionModel().isSelected(2))
-//        {
-//            SHOPPING_CART.forEach((k, v) -> {
-//                VideoData videoData = SecondaryController.VIDEOS.get(k);
-//                videoData.getVideoImageView().setFitWidth(oneBorderPane.getWidth());
-//                videoData.getVideoImageView().setFitHeight(oneBorderPane.getHeight());
-//                oneBorderPane.setCenter(videoData.getVideoImageView());
-//                videoData.getEmbeddedMediaPlayer().media().play(SecondaryController.RESOURCE.get(k).getResource());
-//            });
-//        }
+        //九宫格
+        if (SecondaryController.SHOPPING_CART.size() > 4 && tabPane.getSelectionModel().isSelected(2))
+        {
+            Set<String> keySet = SHOPPING_CART.keySet();
+            List<VideoData> list = new ArrayList<>(keySet.size());
+            for (String key : keySet)
+            {
+                list.add(SecondaryController.VIDEOS.get(key));
+            }
+            stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("play9.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setScene(scene);
+            stage.setTitle("honey-badger");
+            PlayNineController controller = fxmlLoader.getController();
+            stage.setOnCloseRequest((windowEvent) -> {
+                for (VideoData videoData : list)
+                {
+                    if (videoData.getEmbeddedMediaPlayer().status().isPlaying())
+                    {
+                        videoData.getEmbeddedMediaPlayer().controls().stop();
+                    }
+                }
+                controller.getOneBorderPane().setCenter(null);
+                controller.getTwoBorderPane().setCenter(null);
+                controller.getThreeBorderPane().setCenter(null);
+                controller.getFourBorderPane().setCenter(null);
+                controller.getFiveBorderPane().setCenter(null);
+                controller.getSixBorderPane().setCenter(null);
+                controller.getSevenBorderPane().setCenter(null);
+                controller.getEightBorderPane().setCenter(null);
+                controller.getNineBorderPane().setCenter(null);
+            });
+            stage.show();
+
+            int i = 0;
+            Iterator<String> iterator = keySet.iterator();
+            while (iterator.hasNext())
+            {
+                String key = iterator.next();
+                VideoData videoData = SecondaryController.VIDEOS.get(key);
+                if (i == 0)
+                {
+                    videoData.getVideoImageView().setFitWidth(controller.getOneBorderPane().getWidth());
+                    videoData.getVideoImageView().setFitHeight(controller.getOneBorderPane().getHeight());
+                    controller.getOneBorderPane().setCenter(videoData.getVideoImageView());
+                    videoData.getEmbeddedMediaPlayer().media().play(SecondaryController.RESOURCE.get(key).getResource());
+                }
+                if (i == 1)
+                {
+                    videoData.getVideoImageView().setFitWidth(controller.getTwoBorderPane().getWidth());
+                    videoData.getVideoImageView().setFitHeight(controller.getTwoBorderPane().getHeight());
+                    controller.getTwoBorderPane().setCenter(videoData.getVideoImageView());
+                    videoData.getEmbeddedMediaPlayer().media().play(SecondaryController.RESOURCE.get(key).getResource());
+                }
+                if (i == 2)
+                {
+                    videoData.getVideoImageView().setFitWidth(controller.getThreeBorderPane().getWidth());
+                    videoData.getVideoImageView().setFitHeight(controller.getThreeBorderPane().getHeight());
+                    controller.getThreeBorderPane().setCenter(videoData.getVideoImageView());
+                    videoData.getEmbeddedMediaPlayer().media().play(SecondaryController.RESOURCE.get(key).getResource());
+                }
+                if (i == 3)
+                {
+                    videoData.getVideoImageView().setFitWidth(controller.getFourBorderPane().getWidth());
+                    videoData.getVideoImageView().setFitHeight(controller.getFourBorderPane().getHeight());
+                    controller.getFourBorderPane().setCenter(videoData.getVideoImageView());
+                    videoData.getEmbeddedMediaPlayer().media().play(SecondaryController.RESOURCE.get(key).getResource());
+                }
+                if (i == 4)
+                {
+                    videoData.getVideoImageView().setFitWidth(controller.getFiveBorderPane().getWidth());
+                    videoData.getVideoImageView().setFitHeight(controller.getFiveBorderPane().getHeight());
+                    controller.getFiveBorderPane().setCenter(videoData.getVideoImageView());
+                    videoData.getEmbeddedMediaPlayer().media().play(SecondaryController.RESOURCE.get(key).getResource());
+                }
+                if (i == 5)
+                {
+                    videoData.getVideoImageView().setFitWidth(controller.getSixBorderPane().getWidth());
+                    videoData.getVideoImageView().setFitHeight(controller.getSixBorderPane().getHeight());
+                    controller.getSixBorderPane().setCenter(videoData.getVideoImageView());
+                    videoData.getEmbeddedMediaPlayer().media().play(SecondaryController.RESOURCE.get(key).getResource());
+                }
+                if (i == 6)
+                {
+                    videoData.getVideoImageView().setFitWidth(controller.getSevenBorderPane().getWidth());
+                    videoData.getVideoImageView().setFitHeight(controller.getSevenBorderPane().getHeight());
+                    controller.getSevenBorderPane().setCenter(videoData.getVideoImageView());
+                    videoData.getEmbeddedMediaPlayer().media().play(SecondaryController.RESOURCE.get(key).getResource());
+                }
+                if (i == 7)
+                {
+                    videoData.getVideoImageView().setFitWidth(controller.getEightBorderPane().getWidth());
+                    videoData.getVideoImageView().setFitHeight(controller.getEightBorderPane().getHeight());
+                    controller.getEightBorderPane().setCenter(videoData.getVideoImageView());
+                    videoData.getEmbeddedMediaPlayer().media().play(SecondaryController.RESOURCE.get(key).getResource());
+                }
+                if (i == 8)
+                {
+                    videoData.getVideoImageView().setFitWidth(controller.getNineBorderPane().getWidth());
+                    videoData.getVideoImageView().setFitHeight(controller.getNineBorderPane().getHeight());
+                    controller.getNineBorderPane().setCenter(videoData.getVideoImageView());
+                    videoData.getEmbeddedMediaPlayer().media().play(SecondaryController.RESOURCE.get(key).getResource());
+                }
+                i++;
+            }
+        }
     }
 
     private VideoData createVideoData()
